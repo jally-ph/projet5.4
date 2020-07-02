@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+<h1>Inscris-toi sur le site</h1>
+
+    {{ form_start(form) }}
+
+    <div>
+        {{ form_label(form.username, "Nom d'utilisateur") }}
+        {{ form_widget(form.username) }}
+    </div>
+    
+    <div>
+        {{ form_label(form.email, "Email") }}
+        {{ form_widget(form.email) }}
+    </div>
+    
+    <div>
+        {{ form_label(form.password, "Mot de passe") }}
+        {{ form_widget(form.password) }}
+    </div>
+    
+    <div>
+        {{ form_label(form.confirm_password, "Confirme ton mot de passe") }}
+        {{ form_widget(form.confirm_password) }}
+    </div>
+    
+    <button type="submit" class="btn btn-dark">Inscrivez-vous</button>
+    {{ form_end(form) }}
+   
+{% endblock %}

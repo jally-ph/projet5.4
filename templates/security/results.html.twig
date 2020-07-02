@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Résultats de votre recherche</h1>
+
+    
+    {# collapse bootstrap #}
+    <p>
+    <a class="btn btn-dark" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="true" aria-controls="multiCollapseExample1">Livres</a>
+    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2">Chapitres</button>
+    <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3">Utilisateurs</button>
+
+    {# <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button> #}
+    </p>
+
+        <div class="collapse show multi-collapse" id="multiCollapseExample1">
+        <div class="card card-body">
+
+            <h3>{{ booksFound | length }} livres </h3>
+            {% if booksFound | length == 0 %}
+                <p>Aucun titre de livre contenant ce mot n'a été trouvé.</p>
+            {% endif %}
+
+            {% for booksFound in booksFound %}
+                <p><a href="{{ path('book_show', {'id': booksFound.id }) }}">{{ booksFound.title }} </a></p>
+            {% endfor %}
+        </div>
+        </div>
+    
+        <div class="collapse multi-collapse" id="multiCollapseExample2">
+        <div class="card card-body">
+            <h3>{{ chaptersFound | length }} chapitres </h3>
+            {% if chaptersFound | length == 0 %}
+                <p>Aucun chapitre contenant ce mot n'a été trouvé.</p>
+            {% endif %}
+
+            {% for chaptersFound in chaptersFound %}
+                <p><a href="{{ path('chapter_show', {'id': chaptersFound.id }) }}">{{ chaptersFound.title }} </a></p>
+            {% endfor %}        
+            </div>
+        </div>
+
+        <div class="collapse multi-collapse" id="multiCollapseExample3">
+        <div class="card card-body">
+            <h3>{{ usersFound | length }} Utilisateurs </h3>
+            {% if usersFound | length == 0 %}
+                <p>Aucun utilisateur de ce nom n'a été trouvé.</p>
+            {% endif %}
+
+            {% for usersFound in usersFound %}
+                <p>{{ usersFound.username }}</p>
+            {% endfor %}    
+            </div>
+        </div>
+        </div>
+    
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        <h2>{{ chapter.title }}</h2>
+        <div class="detailsChapter">
+            <div class="publicOrNotShowChapter">
+                {% if chapter.public == 1 %}
+                <i class="fas fa-eye" title="votre texte est visible"></i>
+                {% else %}
+                <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+                {% endif %}
+            </div>
+            <div class="completedOrNotShowChapter">
+                {% if chapter.completed == 1 %}
+                <i class="fas fa-book" title="votre texte est complet"></i>
+                {% else %}
+                <i class="fas fa-book-open" title="votre texte n'est pas complet"></i>
+                {% endif %}
+            </div>
+
+            <div class="likeLink">
+                <a href="{{ path('like_chapter', {'id': chapter.id })}}" class="btn btn-link js-like">
+                    {% if app.user and chapter.isLikedByUser(app.user) %}
+                        <i class="fas fa-star"></i>
+                    {% else %}
+                        <i class="far fa-star"></i>
+                    {% endif %}
+                    <span class="js-likes">{{ chapter.likes | length }}</span>
+                </a>
+            </div>
+
+            <div class="metadata">crée le {{ chapter.publishedDate | date('d/m/Y') }} à {{ chapter.publishedDate | date('H:i') }}</div>
+        </div>
+
+
+        {% if app.user %}
+            {% if app.user.username is same as(chapter.books.author) %}
+                <div class="btnEditAndDelete">
+                    <a class="btn btn-outline-secondary" href="{{ path('edit_chapter', {'id': chapter.id }) }}" role="button">Modifier le chapitre</a>
+
+                    {#<!-- Button trigger modal -->#}
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal1">
+                    Supprimer ce chapitre
+                    </button>
+
+                    {#<!-- Modal -->#}
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Voulez-vous vraiment supprimer ce chapitre ? <br>
+                            <span class="badge badge-pill badge-dark"> {{ chapter.title }} </span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <a class="btn btn-dark" href="{{ path('delete_chapter', {'id': chapter.id }) }}" role="button">Supprimer</a>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <hr>
+        <div>{{ chapter.content }}</div>
+    </article>
+    <hr>
+
+    <section id="commentaires">
+        <h3>{{ comments | length }} Commentaires :</h3>
+        
+        {% if app.user %}
+            <p class="messageUserConnected">{{ app.user.username }} tu veux laisser un gentil commentaire à l'auteur ?</p>
+            <div class="formComment">
+                {{ form_start(commentForm) }}
+                
+                {% form_theme commentForm 'bootstrap_4_layout.html.twig' %}
+
+                <div>
+                    {{ form_label(commentForm.content, "Ton commentaire") }}
+                    {{ form_widget(commentForm.content) }}
+                </div>
+
+                <button type="submit" class="btn btn-dark">Laisser un commentaire </button>
+                {{ form_end(commentForm) }}
+            </div>
+            
+        {% else %}
+            <p class="messageUserNotConnected">Vous ne pouvez pas laisser de commentaires, tant que vous n'êtes pas connecté.</p>
+            <a class="btn btn-outline-secondary btnConnectInChapter" href="{{ path('security_login') }}" role="button">Connectez-vous</a>
+        {% endif %}
+
+        {% for comment in comments %}
+            <div class="comment">
+                <span class="badge badge-pill badge-dark">{{ comment.author }}</span>
+                <span class="badge badge-pill badge-light">{{ comment.createdAt | date('d/m/Y à H:i')}}</span>
+                <p>{{ comment.content }}</p>
+            
+                {% if app.user %}
+                    {% if app.user.username is same as(comment.author) %}
+                        <a class="btn btn-outline-secondary" href="{{ path('edit_comment', {'id': comment.id }) }}" role="button">Modifier le commentaire</a>
+
+                        {#<!-- Button trigger modal -->#}
+                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal2-{{ comment.id }}">
+                        Supprimer
+                        </button>
+
+                        {#<!-- Modal -->#}
+                        <div class="modal fade" id="exampleModal2-{{ comment.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Voulez-vous vraiment supprimer ce commentaire ?
+                                        <br><br>
+                                        <p>" {{ comment.content }} "</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <a class="btn btn-dark" href="{{ path('delete_comment', {'id': comment.id }) }}" role="button">Supprimer</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </section>
+{% endblock %}

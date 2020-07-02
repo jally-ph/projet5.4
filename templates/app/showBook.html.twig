@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        <h3>{{ book.title }}</h3>
+        <div class="detailsBook">
+            <span class="badge badge-pill badge-dark">{{ book.category }}</span>
+
+            <div class="publicOrNotShowBook1">
+                {% if book.public == 1 %}
+                <i class="fas fa-eye" title="votre texte est visible"></i>
+                {% else %}
+                <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+                {% endif %}
+            </div>
+            <div class="completedOrNotShowBook1">
+                {% if book.completed == 1 %}
+                <i class="fas fa-book" title="votre texte est complet"></i>
+                {% else %}
+                <i class="fas fa-book-open" title="votre texte n'est pas complet"></i>
+                {% endif %}
+            </div>
+
+            <div class="metadata">crée le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}
+            par {{ book.author }}</div>
+        </div>
+        
+        {% if app.user %}
+            {% if app.user.username is same as(book.author) %}
+                <div class="btnEditAndDelete">
+                    <a class="btn btn-outline-secondary btnEditBook" href="{{ path('edit_book', {'id': book.id }) }}" role="button">Modifier le livre</a>
+                    
+                    {#<!-- Button trigger modal -->#}
+                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
+                    Supprimer ce livre
+                    </button>
+
+                    {#<!-- Modal -->#}
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Suppression</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Voulez-vous vraiment supprimer ce livre ? <br>
+                            <span class="badge badge-pill badge-dark"> {{ book.title | escape }} </span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <a class="btn btn-dark" href="{{ path('delete_book', {'id': book.id }) }}" role="button">Supprimer</a>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                
+                </div>
+                
+            {% endif %}
+        {% endif %}
+        
+        <hr>
+        <div>{{ book.content }}</div>
+    </article>
+    <hr>
+    <section id="chapters">
+        <h3>Chapitres :</h3>
+        {% if app.user %}
+            {% if app.user.username is same as(book.author) %}
+            <a class="btn btn-outline-secondary" href="{{ path('new_chapter', {'id': book.id }) }}" role="button">➕ Nouveau chapitre</a>
+            {% endif %}
+        {% endif %}
+        
+        <div>
+            
+            {% for chapter in chapters %}
+                {% if chapter.public == 1 %}
+                    <div class="titleAndLikes">
+                        <a href="{{ path('chapter_show', {'id': chapter.id }) }}">
+                                {{ chapter.title }}
+                        </a>
+                        <div class="likeLink">
+                            <a href="{{ path('like_chapter', {'id': chapter.id })}}" class="btn btn-link js-like">
+                                {% if app.user and chapter.isLikedByUser(app.user) %}
+                                    <i class="fas fa-star"></i>
+                                {% else %}
+                                    <i class="far fa-star"></i>
+                                {% endif %}
+                                <span class="js-likes">{{ chapter.likes | length }}</span>
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                {% endif %}    
+            {% endfor %}
+
+            {% if app.user %}
+                {% if app.user.username is same as(book.author) %}
+                    {% for chapter in chapters %}
+                            <div>
+                                {% if chapter.public == false %}
+                                    <a href="{{ path('chapter_show', {'id': chapter.id }) }}">
+                                    {{ chapter.title }} <i class="fas fa-eye-slash" title="votre texte est privé"></i>
+                                    </a>
+                                {% endif %}
+                            </div>
+                    {% endfor %} 
+                {% endif %}
+            {% endif %}
+        </div>
+    </section>
+    
+{% endblock %}

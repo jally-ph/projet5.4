@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégorie : {{ category }} {% endblock %}
+
+{% block body %}
+
+    <h1>catégorie : {{ category }}</h1>
+
+    <div>
+        {% if categoryNull %}
+            {{ categoryNull }}
+        {% else %}
+            {% for book in booksFound %}
+                <article class="card cardIndex">
+                <h5 class="card-header">{{ book.title }}</h5>
+                    <div class="card-body">
+                        {# <h5 class="card-title">Special title treatment</h5> #}
+                        <p>{{book.category}} - publié le {{ book.date | date('d/m/Y') }} à {{ book.date | date('H:i') }}</p>
+                        <p class="card-text">{{ book.content }}</p>
+                        <a href="{{ path('book_show', {'id': book.id }) }}" class="btn btn-dark">Voir le livre</a>
+                    </div>
+                </article>
+            {% endfor %}
+        {% endif %}
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% form_theme formEditComment 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <h2>Modifie ton commentaire</h2>
+
+    {{ form_start(formEditComment) }}
+
+        <div>
+            {{ form_label(formEditComment.content, "Ton commentaire") }}
+            {{ form_widget(formEditComment.content) }}
+        </div>
+            
+        <button type="submit" class="btn btn-dark">
+        Modifier le commentaire
+        </button>
+
+    {{ form_end(formEditComment) }}
+{% endblock %}

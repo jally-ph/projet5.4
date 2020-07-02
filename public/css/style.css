@@ -1,0 +1,129 @@
+
+
+body{
+  
+    position: relative;
+}
+
+/* BASE ********************************************************************************/
+
+.formSearch{
+    display : flex;
+}
+
+footer{
+    margin-top: 80px;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+/* INDEX *******************************************************************************/
+
+.carousel-item{
+    width: 1100px;
+    height: 700px;
+}
+
+.lastBooks{
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+.cardIndex{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* CATEGORIES **************************************************************************/
+.cardCategory{
+    margin-top: 30px;
+    width: auto;
+    height: 300px;
+    overflow: hidden;
+}
+
+/* CATEGORY **************************************************************************/
+
+
+/* SHOW BOOK **************************************************************************/
+.detailsBook{
+    display: flex;
+    align-items: center;
+}
+
+.publicOrNotShowBook1{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.completedOrNotShowBook1{
+    margin-right: 20px;
+}
+
+.btnEditBook{
+    margin-right: 20px;
+}
+
+.btnEditAndDelete{
+    margin-top: 20px;
+}
+
+.titleAndLikes{
+    display: flex;
+}
+
+/* SHOW CHAPTER **************************************************************************/
+.detailsChapter{
+    display: flex;
+    align-items: center;
+}
+
+.publicOrNotShowChapter{
+    margin-right: 20px;
+}
+
+.completedOrNotShowChapter{
+    margin-right: 20px;
+}
+
+.messageUserNotConnected, .messageUserConnected{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btnConnectInChapter{
+    margin-bottom: 50px;
+}
+
+.comment{
+    margin-bottom: 40px;
+}
+
+.formComment{
+    margin-bottom: 70px;
+}
+
+/* FORM NEW BOOK **************************************************************************/
+.formNewBookContent{
+    height: 400px!important;
+}
+
+/* ESPACE PERSO **************************************************************************/
+.details{
+    display: flex;
+}
+
+.publicOrNotEspacePerso{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.booksEspacePerso{
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.cardCommentsEspacePerso{
+    margin-top: 30px;
+}

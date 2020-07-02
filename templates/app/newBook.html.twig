@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+
+{% form_theme formNewBook 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+    <h1>
+        {% if titlePage %}
+            Modifier le livre
+        {% else %}
+            Créer un nouveau livre
+        {% endif %}
+    </h1>
+    
+    <hr>
+
+    {{ form_start(formNewBook) }}
+
+    {% form_theme formNewBook 'bootstrap_4_layout.html.twig' %}
+
+        <div>
+            {{ form_label(formNewBook.title, "Un titre") }}
+            {{ form_widget(formNewBook.title) }}
+        </div>
+
+        <div>
+            {{ form_label(formNewBook.content, "Ton histoire") }}
+            {{ form_widget(formNewBook.content, { 'attr': {'class': 'formNewBookContent'} }) }}
+        </div>
+
+        <div>
+            {{ form_label(formNewBook.category, "Choisis une catégorie") }}
+            {{ form_widget(formNewBook.category) }}
+        </div>
+
+        <div>
+            {{ form_widget(formNewBook.completed) }}
+        </div>
+
+        <div>
+            {{ form_widget(formNewBook.public) }}
+        </div>
+
+    <button type="submit" class="btn btn-dark">
+        {% if editMode %}
+            Modifier les détails du livre
+        {% else %}
+            Créer le livre
+        {% endif %}
+    </button>
+
+    {{ form_end(formNewBook) }}
+
+{% endblock %}

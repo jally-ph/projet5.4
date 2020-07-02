@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+
+    <div>
+        <a href="{{ path('show_category', {'category': 'fantastique' }) }}" class="">
+            <div class="card bg-dark text-white cardCategory">
+            <img src="../public/img/fantasy.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                <h2 class="card-title">Fantastique</h2>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ path('show_category', {'category': 'romance' }) }}" class="">
+            <div class="card bg-dark text-white cardCategory">
+            <img src="../public/img/romance.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                <h2 class="card-title">Romance</h2>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ path('show_category', {'category': 'littérature' }) }}" class="">
+            <div class="card bg-dark text-white cardCategory">
+            <img src="../public/img/litterature.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                <h2 class="card-title">Littérature</h2>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ path('show_category', {'category': 'poésie' }) }}" class="">
+            <div class="card bg-dark text-white cardCategory">
+            <img src="../public/img/poesie.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                <h2 class="card-title">Poésie</h2>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ path('show_category', {'category': 'policier' }) }}" class="">
+            <div class="card bg-dark text-white cardCategory">
+            <img src="../public/img/policier.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                <h2 class="card-title">Policier</h2>
+            </div>
+            </div>
+        </a>
+
+        <a href="{{ path('show_category', {'category': 'essai' }) }}" class="">
+            <div class="card bg-dark text-white cardCategory">
+            <img src="../public/img/essai.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                <h2 class="card-title">Essai</h2>
+            </div>
+            </div>
+        </a>
+    
+    </div>
+    
+
+{% endblock %}
