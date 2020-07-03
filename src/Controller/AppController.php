@@ -50,7 +50,7 @@ class AppController extends AbstractController
         $books = $paginator->paginate(
             $publicBooks,
             $request->query->getInt('page', 1),
-            5
+            3
         );
 
         $books->setTemplate('app/twitter_bootstrap_v4_pagination.html.twig');

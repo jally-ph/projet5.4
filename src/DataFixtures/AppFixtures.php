@@ -9,9 +9,19 @@ use App\Entity\Chapter;
 use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
+
     public function load(ObjectManager $manager)
     {
 
@@ -19,12 +29,14 @@ class AppFixtures extends Fixture
         $users = [];
 
         //Créer des users
-        for($j = 0; $j < 6; $j++){
+        for($j = 0; $j < 3; $j++){
             
             $user = new User();
+            // $password = "$2a$0DnDOFNZF78bH88iobfdsn_çEdhZHNSiieUnhe8-B2bdH0-JDJ.fuqipbN8ZhdJSèhedcoisnfHNenIH56#eFVD";
+            $password = $this->encoder->encodePassword($user, 'password');
             $user->setEmail($faker->email)
                     ->setUsername($faker->name)
-                    ->setPassword('$21$om4o0pcslrfinFENZdslnOFINQ_fsdDZtLiV23MSFsf0FDdlQ#dfnslnedmkLFNA4ALkdjcDbQ(ERFZ)$dfliosSDSF29');
+                    ->setPassword($password);
             
             $users[] = $user;
     
@@ -67,7 +79,7 @@ class AppFixtures extends Fixture
             //     $manager->persist($like);
             // }
 
-            // Créer 4 chapters
+            // Créer chapters
             for($j = 1; $j <= mt_rand(3, 8); $j++)
             {
                 $status = rand(0,1);
@@ -75,7 +87,7 @@ class AppFixtures extends Fixture
 
                 $chapter = new Chapter();
                 $chapter->setTitle($faker->sentence())
-                        ->setContent($faker->paragraph(4))
+                        ->setContent($faker->paragraph(24))
                         ->setPublishedDate($faker->dateTimeBetween('-6 months'))
                         ->setBooks($book)
                         ->setPublic($status)
@@ -84,7 +96,7 @@ class AppFixtures extends Fixture
                 $manager->persist($chapter);
 
                 //Créer des likes dans les chap
-                for($j = 0; $j < mt_rand(0, 5); $j++){
+                for($j = 0; $j < mt_rand(0, 8); $j++){
                     $like = new Like();
                     $like->setUser($faker->randomElement($users))
                         ->setChapter($chapter)
@@ -94,10 +106,10 @@ class AppFixtures extends Fixture
                 }
 
 
-                //Créer 4 comments
+                //Créer comments
                 for($k = 1; $k <= mt_rand(3, 6); $k++)
                 {
-                    $content = '<p>'. join($faker->paragraphs(2));
+                    $content = join($faker->paragraphs(2));
 
                     $comment = new Comment();
 
@@ -129,8 +141,6 @@ class AppFixtures extends Fixture
             }
 
         }
-
-
         $manager->flush();
     }
 }
