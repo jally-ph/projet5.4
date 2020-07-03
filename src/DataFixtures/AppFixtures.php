@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
             $user = new User();
             $user->setEmail($faker->email)
                     ->setUsername($faker->name)
-                    ->setPassword('password');
+                    ->setPassword('$21$om4o0pcslrfinFENZdslnOFINQ_fsdDZtLiV23MSFsf0FDdlQ#dfnslnedmkLFNA4ALkdjcDbQ(ERFZ)$dfliosSDSF29');
             
             $users[] = $user;
     
@@ -57,15 +57,15 @@ class AppFixtures extends Fixture
 
             $manager->persist($book);
 
-            //Créer des likes dans les books
-            for($j = 0; $j < mt_rand(0, 5); $j++){
-                $like = new Like();
-                $like->setUser($faker->randomElement($users))
-                    ->setBook($book)
-                    ->setCreatedAt($faker->dateTimeBetween('-6 months'));
+            // //Créer des likes dans les books
+            // for($j = 0; $j < mt_rand(0, 5); $j++){
+            //     $like = new Like();
+            //     $like->setUser($faker->randomElement($users))
+            //         ->setBook($book)
+            //         ->setCreatedAt($faker->dateTimeBetween('-6 months'));
 
-                $manager->persist($like);
-            }
+            //     $manager->persist($like);
+            // }
 
             // Créer 4 chapters
             for($j = 1; $j <= mt_rand(3, 8); $j++)
@@ -114,14 +114,14 @@ class AppFixtures extends Fixture
                     $manager->persist($comment);
 
                     //Créer des likes dans les com
-                    for($j = 0; $j < mt_rand(0, 4); $j++){
-                        $like = new Like();
-                        $like->setUser($faker->randomElement($users))
-                            ->setComment($comment)
-                            ->setCreatedAt($faker->dateTimeBetween('-6 months'));
+                    // for($j = 0; $j < mt_rand(0, 4); $j++){
+                    //     $like = new Like();
+                    //     $like->setUser($faker->randomElement($users))
+                    //         ->setComment($comment)
+                    //         ->setCreatedAt($faker->dateTimeBetween('-6 months'));
 
-                        $manager->persist($like);
-                    }
+                    //     $manager->persist($like);
+                    // }
 
                 }
 
@@ -130,15 +130,6 @@ class AppFixtures extends Fixture
 
         }
 
-        // for($i=0; $i < 5; $i++){
-        //     $user = new User();
-        //     $user->setEmail($faker->email)
-        //         ->setPassword($this->encoder->encodePassword($user, 'password'));
-
-        //     $manager->persist($user);
-
-        //     $users[] = $user;
-        // }
 
         $manager->flush();
     }
